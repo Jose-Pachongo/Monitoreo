@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>SENCINET</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'base.css' %}">
+</head>
+<body>
+  <div class="menu_des" id="menu_des">
+    <div class="toggle-btn" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <h2>SENCINET</h2>
+    <ul>
+      <li><i class="fas fa-home"></i><span>Inicio</span></li>
+      <li><i class="fas fa-network-wired"></i><span>Monitoreo</span></li>
+      <li><i class="fas fa-history"></i><span>Historial</span></li>
+      <li><i class="fas fa-user"></i><span>Usuarios</span></li>
+      <li><i class="fas fa-cog"></i><span>Configuración</span></li>
+      <li><i class="fas fa-sign-out-alt"></i><span>Salir</span></li>
+    </ul>
+  </div>
+  {% block content %}
+  <main>
+
+  </main>
+  {% endblock %}
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("menu_des").classList.toggle("collapsed");
+    }
+  </script>
+</body>
+</html>

@@ -116,7 +116,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 import os
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'monitoreo/static')]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'monitoreo/static')]
 
 
 # Default primary key field type
