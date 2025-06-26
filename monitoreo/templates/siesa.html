@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block title %}Monitoreo - Siesa{% endblock %}
+
+{% block content %}
+{% load static %}
+  <link rel="stylesheet" href="/static/siesa.css">
+
+  <header>
+    <h1>Monitoreo – Siesa (POS PVD)</h1>
+  </header>
+
+  <main>
+    <section class="contenedor">
+      <table class="tabla-monitoreo">
+        <thead>
+          <tr>
+            <th>Punto</th>
+            <th>Latencia</th>
+            <th>Fecha/Hora</th>
+            <th>Latencia</th>
+            <th>Packet Loss</th>
+            <th>Jitter</th>
+            <th>Link</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Ejemplo de fila -->
+          <tr class="verde">
+            <td>Punto 01</td>
+            <td>UL1</td>
+            <td>2025-06-25 14:30</td>
+            <td>15 ms</td>
+            <td>0%</td>
+            <td>3 ms</td>
+            <td>UP</td>
+            <td>Correcto</td>
+          </tr>
+          <tr class="amarillo">
+            <td>Punto 02</td>
+            <td>UL1</td>
+            <td>2025-06-25 14:30</td>
+            <td>95 ms</td>
+            <td>2%</td>
+            <td>10 ms</td>
+            <td>UP</td>
+            <td>Cercano al Límite</td>
+          </tr>
+          <tr class="rojo">
+            <td>Punto 03</td>
+            <td>UL2</td>
+            <td>2025-06-25 14:30</td>
+            <td>200 ms</td>
+            <td>12%</td>
+            <td>50 ms</td>
+            <td>DOWN</td>
+            <td>Alerta</td>
+          </tr>
+          <!-- Aquí irán más filas cada 5 minutos -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <!-- <div class="contenedor">
+    <table class="tabla-monitoreo">
+      <thead>
+        <tr>
+          <th>Punto</th>
+          <th>Interfaz</th>
+          <th>Fecha/Hora</th>
+          <th>Latencia</th>
+          <th>Packet Loss</th>
+          <th>Jitter</th>
+          <th>Link</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for punto in puntos %}
+        <tr class="{% if punto.estado == 'rojo' %}rojo{% elif punto.estado == 'amarillo' %}amarillo{% else %}verde{% endif %}">
+          <td>{{ punto.nombre }}</td>
+          <td>{{ punto.interfaz }}</td>
+          <td>{{ punto.fecha }}</td>
+          <td>{{ punto.latencia }}</td>
+          <td>{{ punto.packet_loss }}</td>
+          <td>{{ punto.jitter }}</td>
+          <td>{{ punto.link }}</td>
+          <td>{{ punto.estado }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Contenedor para la gráfica -->
+     <h1>Represenacion Grafica</h1>
+    <div class="grafica-container">
+      <canvas id="grafico-siesa" width="100%" height="300"></canvas>
+    </div>
+  </div> -->
+
+  <!-- Si luego usas Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Aquí va luego tu script para graficar con Chart.js
+  </script>
+{% endblock %}

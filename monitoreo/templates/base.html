@@ -8,29 +8,64 @@
   <link rel="stylesheet" href="{% static 'base.css' %}">
 </head>
 <body>
-  <div class="menu_des" id="menu_des">
+  <div class="sidebar" id="sidebar">
     <div class="toggle-btn" onclick="toggleSidebar()">
       <i class="fas fa-bars"></i>
     </div>
-    <h2>SENCINET</h2>
-    <ul>
-      <li><i class="fas fa-home"></i><span>Inicio</span></li>
-      <li><i class="fas fa-network-wired"></i><span>Monitoreo</span></li>
-      <li><i class="fas fa-history"></i><span>Historial</span></li>
-      <li><i class="fas fa-user"></i><span>Usuarios</span></li>
-      <li><i class="fas fa-cog"></i><span>Configuración</span></li>
-      <li><i class="fas fa-sign-out-alt"></i><span>Salir</span></li>
+    <h2 class="titulo">SENCINET</h2>
+    <ul class="menu">
+      <li><a href="{% url 'home' %}"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+
+      <li>
+        <div class="submenu-header" onclick="toggleSubmenu()">
+          <i class="fas fa-network-wired"></i><span>Monitoreo</span>
+          <i class="fas fa-chevron-down arrow" id="arrow"></i>
+        </div>
+        <ul class="submenu" id="submenu">
+        <li>
+          <a href="{% url 'siesa' %}">
+            <i class="fas fa-store"></i> <span class="submenu-text">Siesa</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'didi' %}">
+            <i class="fas fa-motorcycle"></i> <span class="submenu-text">Didi Food</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'rappi' %}">
+            <i class="fas fa-biking"></i> <span class="submenu-text">Rappi</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'planta' %}">
+            <i class="fas fa-headset"></i> <span class="submenu-text">Planta</span>
+          </a>
+        </li>
+      </ul>
+
+      </li>
+
+      <li><a href="{% url 'checklist' %}"><i class="fas fa-check"></i><span>CheckList</span></a></li>
+      <li><a href="#"><i class="fas fa-sign-out-alt"></i><span>Salir</span></a></li>
     </ul>
   </div>
-  {% block content %}
-  <main>
 
-  </main>
-  {% endblock %}
+  <div class="main-content">
+    {% block content %}
+    {% endblock %}
+  </div>
 
   <script>
     function toggleSidebar() {
-      document.getElementById("menu_des").classList.toggle("collapsed");
+      document.getElementById("sidebar").classList.toggle("collapsed");
+    }
+
+    function toggleSubmenu() {
+      const submenu = document.getElementById("submenu");
+      const arrow = document.getElementById("arrow");
+      submenu.classList.toggle("show");
+      arrow.classList.toggle("rotate");
     }
   </script>
 </body>

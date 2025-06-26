@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %} Rappi {% endblock %}
+
+{% block content %}
+{% load static %}
+  <link rel="stylesheet" href="/static/rappi.css">
+
+<main class="contenido-principal">
+  <h1 class="titulo-servicio">Monitoreo - Rappi (Canales Djitales)</h1>
+
+  <div class="tabla-contenedor">
+    <table class="tabla-monitoreo">
+      <thead>
+        <tr>
+          <th>Interfaz</th>
+          <th>Punto</th>
+          <th>Fecha/Hora</th>
+          <th>Latencia</th>
+          <th>Packet Loss</th>
+          <th>Jitter</th>
+          <th>Link</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for punto in puntos_rappi %}
+        <tr class="{% if punto.alerta == 'rojo' %}estado-rojo{% elif punto.alerta == 'amarillo' %}estado-amarillo{% else %}estado-verde{% endif %}">
+          <td>{{ punto.interfaz }}</td>
+          <td>{{ punto.nombre }}</td>
+          <td>{{ punto.fecha }}</td>
+          <td>{{ punto.latencia }}</td>
+          <td>{{ punto.packet_loss }}</td>
+          <td>{{ punto.jitter }}</td>
+          <td>{{ punto.link }}</td>
+          <td>{{ punto.estado }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="contenedor-grafica">
+    <h2>Gráfica de Comportamiento</h2>
+    <canvas id="grafica-rappi"></canvas>
+  </div>
+</main>
+{% endblock %}

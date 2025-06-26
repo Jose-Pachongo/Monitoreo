@@ -1,0 +1,84 @@
+/* ====== Estilos generales para páginas de monitoreo ====== */
+
+
+
+.titulo-servicio {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* ====== Tabla de monitoreo ====== */
+
+.tabla-contenedor {
+  overflow-x: auto;
+  margin-bottom: 40px;
+}
+
+.tabla-monitoreo {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla-monitoreo thead {
+  background-color: #2c3e50;
+  color: #fff;
+}
+
+.tabla-monitoreo th,
+.tabla-monitoreo td {
+  padding: 12px 15px;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 1px solid #ccc;
+}
+
+.tabla-monitoreo tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ====== Estados visuales ====== */
+
+.estado-verde {
+  background-color: #e6f9e6;
+  color: #2e7d32;
+}
+
+.estado-amarillo {
+  background-color: #fffbe6;
+  color: #f9a825;
+}
+
+.estado-rojo {
+  background-color: #fdecea;
+  color: #c62828;
+}
+
+/* ====== Gráfica ====== */
+
+.contenedor-grafica {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.contenedor-grafica h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+#grafica-rappi {
+  width: 100%;
+  max-width: 1000px;
+  height: 300px;
+  display: block;
+  margin: 0 auto;
+}

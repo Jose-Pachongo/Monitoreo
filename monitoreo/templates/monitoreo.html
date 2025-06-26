@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block title %} Monitoreo {% endblock %}
+
+{% block content %}
+<main class="p-6">
+  <h1 class="text-3xl font-bold mb-6">Monitoreo en Tiempo Real</h1>
+
+  <!-- Gráficas en tiempo real -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+    {% comment %} Puedes usar sensores reales aquí si los tienes en el contexto {% endcomment %}
+    <div class="bg-white rounded-xl p-4 shadow text-gray-900">
+      <h2 class="text-lg font-semibold text-center mb-2">Latencia</h2>
+      <p id="estado-latencia" class="text-center font-bold text-green-600 mb-4">Todo está correcto ✅</p>
+      <canvas id="grafica-latencia" height="150"></canvas>
+    </div>
+
+    <div class="bg-white rounded-xl p-4 shadow text-gray-900">
+      <h2 class="text-lg font-semibold text-center mb-2">Packet Loss</h2>
+      <p id="estado-packet" class="text-center font-bold text-green-600 mb-4">Todo está correcto ✅</p>
+      <canvas id="grafica-packet" height="150"></canvas>
+    </div>
+
+    <div class="bg-white rounded-xl p-4 shadow text-gray-900">
+      <h2 class="text-lg font-semibold text-center mb-2">Jitter</h2>
+      <p id="estado-jitter" class="text-center font-bold text-green-600 mb-4">Todo está correcto ✅</p>
+      <canvas id="grafica-jitter" height="150"></canvas>
+    </div>
+  </div>
+
+  <!-- Tabla por servicio -->
+  <div class="space-y-10">
+    {% for grupo in datos_por_servicio %}
+      <div class="bg-white p-4 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold text-blue-800 mb-4">{{ grupo.servicio }}</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full table-auto border-collapse text-left">
+            <thead class="bg-blue-900 text-white">
+              <tr>
+                <th class="p-2">Punto</th>
+                <th class="p-2">Fecha/Hora</th>
+                <th class="p-2">Latencia</th>
+                <th class="p-2">Packet Loss</th>
+                <th class="p-2">Jitter</th>
+                <th class="p-2">Link</th>
+                <th class="p-2">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for punto in grupo.puntos %}
+              <tr class="{% if punto.alerta %}bg-red-100{% else %}bg-green-100{% endif %}">
+                <td class="p-2">{{ punto.nombre }}</td>
+                <td class="p-2">{{ punto.fecha }}</td>
+                <td class="p-2">{{ punto.latencia }}</td>
+                <td class="p-2">{{ punto.packet_loss }}</td>
+                <td class="p-2">{{ punto.jitter }}</td>
+                <td class="p-2">{{ punto.link }}</td>
+                <td class="p-2">{{ punto.estado }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</main>
+
+<script>
+  // Ejemplo de gráfica simulada, puedes reemplazar con datos reales si lo deseas
+  const sensores = [
+    { nombre: 'latencia', limite: 100, min: 50, max: 150, color: '#1E88E5' },
+    { nombre: 'packet', limite: 5, min: 0, max: 10, color: '#43A047' },
+    { nombre: 'jitter', limite: 30, min: 5, max: 40, color: '#FB8C00' }
+  ];
+
+  const charts = {};
+
+  sensores.forEach(sensor => {
+    const datos = Array.from({ length: 10 }, () => Math.floor(Math.random() * (sensor.max - sensor.min) + sensor.min));
+    const ctx = document.getElementById(`grafica-${sensor.nombre}`).getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: Array.from({ length: datos.length }, (_, i) => `#${i + 1}`),
+        datasets: [{
+          label: sensor.nombre,
+          data: datos,
+          borderColor: sensor.color,
+          backgroundColor: sensor.color + '33',
+          borderWidth: 2,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+    charts[sensor.nombre] = { chart, datos };
+  });
+
+  setInterval(() => {
+    sensores.forEach(sensor => {
+      const nuevo = Math.floor(Math.random() * (sensor.max - sensor.min) + sensor.min);
+      const ref = charts[sensor.nombre];
+      ref.datos.push(nuevo);
+      ref.datos.shift();
+      ref.chart.data.datasets[0].data = ref.datos;
+      ref.chart.update();
+
+      const estado = document.getElementById(`estado-${sensor.nombre}`);
+      if (nuevo > sensor.limite) {
+        estado.textContent = "¡Alerta! ⚠️";
+        estado.classList.remove("text-green-600");
+        estado.classList.add("text-red-600");
+      } else {
+        estado.textContent = "Todo está correcto ✅";
+        estado.classList.remove("text-red-600");
+        estado.classList.add("text-green-600");
+      }
+    });
+  }, 5000);
+</script>
+{% endblock %}
